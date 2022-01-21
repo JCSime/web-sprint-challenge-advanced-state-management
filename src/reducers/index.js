@@ -1,12 +1,7 @@
-import { FETCH_START, FETCH_FAIL, FETCH_SUCCESS} from './../actions';
+import { FETCH_START, FETCH_FAIL, FETCH_SUCCESS, ADD_SMURF, SET_ERROR} from './../actions';
 
 export const initialState = {
-    smurfs: {
-        name: 'Poppa Smurf',
-        position: 'Village Leader',
-        nickName: 'Pops',
-        description: 'Papa is the practical village leader and the father figure of 100 or so young Smurfs. He is easily identified by his red Smurf hat, pants, and a shortly-trimmed white beard and moustache.'
-    },
+    smurfs: [],
     isFetching: false,
     error: ''
 }
@@ -19,25 +14,44 @@ const reducer = (state = initialState, action)=>{
               smurf: {},
               isFetching: true,
               error: ''
-            };
-            case FETCH_FAIL:
-                return {
-                  ...state,
-                  smurf:{},
-                  isFetching: false,
-                  error: action.payload
-                };
-              case FETCH_SUCCESS:
-                return {
-                  ...state,
-                  smurf: action.payload,
-                  isFetching: false,
-                  error: ''
-                };
-              default:
-                return state;
             }
-          };
+		case FETCH_FAIL:
+			return {
+				...state,
+				smurf:{},
+				isFetching: false,
+				error: action.payload
+			}
+			case FETCH_SUCCESS:
+			return {
+				...state,
+				smurf: action.payload,
+				isFetching: false,
+				error: ''
+			}
+			case ADD_SMURF:
+			const newSmurf = {
+
+				id: Date.now(),
+				...action.payload
+				// name: action.payload,
+				// position: action.payload,
+				// nickname: action.payload,
+				// description: action.payload,
+			};
+			return({
+				...state,
+				smurfs: [...state.smurfs, newSmurf]
+			})
+		case SET_ERROR:
+			return({
+				...state,
+				errorMessage: action.payload
+			})
+			default:
+			return state;
+	}
+};
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
 export default reducer;
