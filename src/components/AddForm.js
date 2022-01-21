@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {connect} from 'react-redux';
-import {setError, addSmurf} from '../actions';
+import {setError, addSmurf} from '../actions'
 
 const AddForm = (props) => {
     const {errorMessage, setError, addSmurf} = props;
@@ -14,10 +14,11 @@ const AddForm = (props) => {
 
     //remove when error state is added
 
+
     const handleChange = e => {
         setState({
             ...state,
-            [e.target.name]:e.target.value
+            [e.target.name]:e.target.value,
         });
     }
 
@@ -25,10 +26,10 @@ const AddForm = (props) => {
         e.preventDefault();
         if (state.name === "" || state.position === "" || state.nickname === "") {
             //dispatch a custom error action
-            setError("Please complete the form to submit.")
+            setError("Complete the form to submit.")
         } else {
             //dispatch an addSmurf action
-            addSmurf(state)
+           addSmurf(state)
         }
     }
 

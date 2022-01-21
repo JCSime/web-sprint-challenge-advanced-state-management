@@ -1,57 +1,54 @@
-import { FETCH_START, FETCH_FAIL, FETCH_SUCCESS, ADD_SMURF, SET_ERROR} from './../actions';
-
+import { FETCH_START, FETCH_SUCCESS, FETCH_FAIL, ADD_SMURF, SET_ERROR} from '../actions';
 export const initialState = {
     smurfs: [],
-    isFetching: false,
-    error: ''
+    isLoading: false,
+    errorMessage: ''
 }
 
-const reducer = (state = initialState, action)=>{
-    switch (action.type) {
-        case FETCH_START:
-            return {
-              ...state,
-              smurf: {},
-              isFetching: true,
-              error: ''
-            }
-		case FETCH_FAIL:
-			return {
-				...state,
-				smurf:{},
-				isFetching: false,
-				error: action.payload
-			}
-			case FETCH_SUCCESS:
-			return {
-				...state,
-				smurf: action.payload,
-				isFetching: false,
-				error: ''
-			}
-			case ADD_SMURF:
-			const newSmurf = {
+const reducer = (state= initialState, action) => {
+    switch(action.type){
 
-				id: Date.now(),
-				...action.payload
-				// name: action.payload,
-				// position: action.payload,
-				// nickname: action.payload,
-				// description: action.payload,
-			};
-			return({
-				...state,
-				smurfs: [...state.smurfs, newSmurf]
-			})
-		case SET_ERROR:
-			return({
-				...state,
-				errorMessage: action.payload
-			})
-			default:
-			return state;
-	}
-};
+        case FETCH_START:
+            return({
+                ...state,
+                isLoading: true
+            })
+        case FETCH_SUCCESS:
+            return({
+                ...state, 
+                smurfs: action.payload,
+                isLoading: false,
+            })
+        case FETCH_FAIL:
+            return({
+                ...state,
+                isLoading: false,
+                errorMessage: action.payload
+            })
+        case ADD_SMURF:
+            const newSmurf = {
+
+                id: Date.now(),
+                ...action.payload
+                // name: action.payload,
+                // position: action.payload,
+                // nickname: action.payload,
+                // description: action.payload,
+            };
+            return({
+                ...state,
+                smurfs: [...state.smurfs, newSmurf]
+            })
+        case SET_ERROR:
+            return({
+                ...state,
+                errorMessage: action.payload
+            })
+        default:
+            return state;
+
+    }
+}
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
 export default reducer;
